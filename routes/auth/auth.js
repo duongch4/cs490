@@ -30,36 +30,36 @@ router.get('/github/callback',
 // =====================================
 // GOOGLE ROUTES =====================
 // =====================================
-router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+// router.get('/google',
+//   passport.authenticate('google', { scope: ['profile', 'email'] })
+// );
 
-router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    // Successful authentication.
-    console.log('Authenticated with Google')
-    res.cookie('userId', req.session.passport.user)
-    res.redirect('/');
-  });
+// router.get('/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function (req, res) {
+//     // Successful authentication.
+//     console.log('Authenticated with Google')
+//     res.cookie('userId', req.session.passport.user)
+//     res.redirect('/');
+//   });
 
 // =====================================
 // FACEBOOK ROUTES =====================
 // =====================================
 // route for facebook authentication and login
-router.get('/facebook',
-  passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
-);
+// router.get('/facebook',
+//   passport.authenticate('facebook', { scope: ['public_profile', 'email'] })
+// );
 
-// handle the callback after facebook has authenticated the user
-router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function (req, res) {
-    // Successful authentication.
-    console.log('Authenticated with Facebook')
-    res.cookie('userId', req.session.passport.user)
-    res.redirect('/');
-  });
+// // handle the callback after facebook has authenticated the user
+// router.get('/facebook/callback',
+//   passport.authenticate('facebook', { failureRedirect: '/login' }),
+//   function (req, res) {
+//     // Successful authentication.
+//     console.log('Authenticated with Facebook')
+//     res.cookie('userId', req.session.passport.user)
+//     res.redirect('/');
+//   });
 
 // =====================================
 // LOCAL AUTH ROUTES =====================

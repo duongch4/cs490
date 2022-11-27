@@ -1,7 +1,7 @@
 // All authentication strategy code should go here.
 const GitHubStrategy = require("passport-github").Strategy;
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
+// const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+// const FacebookStrategy = require("passport-facebook").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../model/users");
 
@@ -66,127 +66,127 @@ module.exports = function(passport) {
   // =========================================================================
   // GOOGLE ==================================================================
   // =========================================================================
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK
-      },
-      function(token, refreshToken, profile, done) {
-        // make the code asynchronous
-        // User.findOne won't fire until we have all our data back from Google
-        process.nextTick(function() {
-          // try to find the user based on their google id
-          User.findOne(
-            {
-              "email": profile.emails[0].value
-            },
-            function(err, user) {
-              if (err) return done(err);
+//   passport.use(
+//     new GoogleStrategy(
+//       {
+//         clientID: process.env.GOOGLE_CLIENT_ID,
+//         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//         callbackURL: process.env.GOOGLE_CALLBACK
+//       },
+//       function(token, refreshToken, profile, done) {
+//         // make the code asynchronous
+//         // User.findOne won't fire until we have all our data back from Google
+//         process.nextTick(function() {
+//           // try to find the user based on their google id
+//           User.findOne(
+//             {
+//               "email": profile.emails[0].value
+//             },
+//             function(err, user) {
+//               if (err) return done(err);
 
-              if (!user) {
-                console.log('No user found. Creating new profile from Google');
-                user = new User();
-                user.google.id = profile.id;
-                user.email = profile.emails[0].value;
-                user.displayName = profile.displayName;
-                user.username = profile.displayName;
-                user.avatar = profile.photos[0].value;
+//               if (!user) {
+//                 console.log('No user found. Creating new profile from Google');
+//                 user = new User();
+//                 user.google.id = profile.id;
+//                 user.email = profile.emails[0].value;
+//                 user.displayName = profile.displayName;
+//                 user.username = profile.displayName;
+//                 user.avatar = profile.photos[0].value;
 
-                user.save(function(err) {
-                  if (err) throw err;
-                  return done(null, user);
-                });
-              } 
-              else {
-                if (!user.google.id) {
-                  console.log('User found but no Google ID');
-                  user.google.id = profile.id;
+//                 user.save(function(err) {
+//                   if (err) throw err;
+//                   return done(null, user);
+//                 });
+//               } 
+//               else {
+//                 if (!user.google.id) {
+//                   console.log('User found but no Google ID');
+//                   user.google.id = profile.id;
 
-                  user.save(function(err) {
-                    if (err) console.log(err);
-                    return done(null, user);
-                  })
-                } 
-                else {
-                  console.log('User exists with this Google ID');
-                  return done(null, user);
-                }
-              }
-            }
-          );
-        });
-      }
-    )
-  );
+//                   user.save(function(err) {
+//                     if (err) console.log(err);
+//                     return done(null, user);
+//                   })
+//                 } 
+//                 else {
+//                   console.log('User exists with this Google ID');
+//                   return done(null, user);
+//                 }
+//               }
+//             }
+//           );
+//         });
+//       }
+//     )
+//   );
 
   // =========================================================================
   // FACEBOOK ================================================================
   // =========================================================================
-  passport.use(
-    new FacebookStrategy(
-      {
-        // pull in our app id and secret from our auth.js file
-        clientID: process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: process.env.FACEBOOK_CALLBACK,
-        profileFields: ['id', 'displayName', 'email']
-      },
+//   passport.use(
+//     new FacebookStrategy(
+//       {
+//         // pull in our app id and secret from our auth.js file
+//         clientID: process.env.FACEBOOK_CLIENT_ID,
+//         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+//         callbackURL: process.env.FACEBOOK_CALLBACK,
+//         profileFields: ['id', 'displayName', 'email']
+//       },
 
-      // facebook will send back the token and profile
-      function(token, refreshToken, profile, done) {
-        // asynchronous
-        process.nextTick(function() {
-          console.log('Facebook profile', profile);
-          // find the user in the database based on their facebook id
-          User.findOne(
-            {
-              "email": profile.emails[0].value
-            },
-            function(err, user) {
-              // if there is an error, stop everything and return that
-              // ie an error connecting to the database
-              if (err) return done(err);
+//       // facebook will send back the token and profile
+//       function(token, refreshToken, profile, done) {
+//         // asynchronous
+//         process.nextTick(function() {
+//           console.log('Facebook profile', profile);
+//           // find the user in the database based on their facebook id
+//           User.findOne(
+//             {
+//               "email": profile.emails[0].value
+//             },
+//             function(err, user) {
+//               // if there is an error, stop everything and return that
+//               // ie an error connecting to the database
+//               if (err) return done(err);
 
-              // if the user is found, then log them in
-              if (!user) {
-                // if there is no user found with that facebook id, create them
-                console.log('User not found. Creating new profile from Facebook');
-                user = new User();
-                // set all of the facebook information in our user model
-                user.facebook.id = profile.id; // set the users facebook id
-                user.email = profile.emails[0].value;
-                user.displayName = profile.displayName;
-                user.username = profile.displayName;
+//               // if the user is found, then log them in
+//               if (!user) {
+//                 // if there is no user found with that facebook id, create them
+//                 console.log('User not found. Creating new profile from Facebook');
+//                 user = new User();
+//                 // set all of the facebook information in our user model
+//                 user.facebook.id = profile.id; // set the users facebook id
+//                 user.email = profile.emails[0].value;
+//                 user.displayName = profile.displayName;
+//                 user.username = profile.displayName;
                 
-                // save our user to the database
-                user.save(function(err) {
-                  if (err) console.log(err);
-                  // if successful, return the new user
-                  return done(null, user);
-                });
-              } else {
-                if (!user.facebook.id) {
-                  // User is found but no facebook id
-                  console.log('User found but no Facebook ID');
-                  user.facebook.id = profile.id; // set the users facebook id
+//                 // save our user to the database
+//                 user.save(function(err) {
+//                   if (err) console.log(err);
+//                   // if successful, return the new user
+//                   return done(null, user);
+//                 });
+//               } else {
+//                 if (!user.facebook.id) {
+//                   // User is found but no facebook id
+//                   console.log('User found but no Facebook ID');
+//                   user.facebook.id = profile.id; // set the users facebook id
 
-                  user.save(function(err) {
-                    if (err) console.log(err);
-                    return done(null, user);
-                  });
-                } else {
-                  console.log('User found with existing Facebook ID');
-                  return done(null, user); // user found, return that user
-                }
-              }
-            }
-          );
-        });
-      }
-    )
-  );
+//                   user.save(function(err) {
+//                     if (err) console.log(err);
+//                     return done(null, user);
+//                   });
+//                 } else {
+//                   console.log('User found with existing Facebook ID');
+//                   return done(null, user); // user found, return that user
+//                 }
+//               }
+//             }
+//           );
+//         });
+//       }
+//     )
+//   );
 
   // =========================================================================
   // LOCAL SIGNUP ============================================================

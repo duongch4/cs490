@@ -10,9 +10,9 @@ import Button from '../atoms/Button';
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";
-// import githubLogin from "../../images/github-login.svg";
-import facebookLogin from "../../images/facebook-login.svg";
-import googleLogin from "../../images/google-login.svg";
+import githubLogin from "../../images/github-login.svg";
+// import facebookLogin from "../../images/facebook-login.svg";
+// import googleLogin from "../../images/google-login.svg";
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
@@ -117,15 +117,15 @@ class Nav extends Component {
                         Login/Register
                       </ModalHeader>
                       <ModalBody className="text-center">
-                        {/* <a href={`${window.location.origin}/auth/github/`}>
+                        <a href={`${window.location.origin}/auth/github/`}>
                           <img src={githubLogin} className="social-login" alt="Sign in with GitHub" />
-                        </a> */}
-                        <a href={`${window.location.origin}/auth/google/`}>
+                        </a>
+                        {/* <a href={`${window.location.origin}/auth/google/`}>
                           <img src={googleLogin} className="social-login" alt="Sign in with Google" />
                         </a>
                         <a href={`${window.location.origin}/auth/facebook/`}>
                           <img src={facebookLogin} className="social-login" alt="Sign in with Facebook." />
-                        </a>
+                        </a> */}
                         <p>
                           <strong>Sign in with your email</strong>
                         </p>
